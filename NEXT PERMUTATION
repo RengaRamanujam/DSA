@@ -1,0 +1,43 @@
+class Solution {
+ public void nextPermutation(int[] nums) {
+    int n = nums.length;
+    int index = -1;
+        
+    // Find the index where descending order breaks
+    for (int i = n - 2; i >= 0; i--) {
+        if (nums[i] < nums[i + 1]) {
+            index = i;
+            break;
+        }
+    }
+        
+    // If the array is in descending order, reverse it
+    if (index == -1) {
+        reverseArray(nums, 0, n - 1);  return;
+    }
+        
+    // Find the smallest element to the right of index that is larger than nums[index]
+    int smallerIndex = n - 1;
+    while (nums[smallerIndex] <= nums[index]) {
+        smallerIndex--;
+    }
+        
+    // Swap nums[index] and nums[smallerIndex]
+    int temp = nums[index];
+    nums[index] = nums[smallerIndex];
+    nums[smallerIndex] = temp;
+        
+    // Reverse the right half of the array
+    reverseArray(nums, index + 1, n - 1);
+}
+    
+private void reverseArray(int[] nums, int left, int right) {
+    while (left < right) {
+        int temp = nums[left];
+        nums[left] = nums[right];
+        nums[right] = temp;
+        left++;
+        right--;
+     }
+  }
+}
